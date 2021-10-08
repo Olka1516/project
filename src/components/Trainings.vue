@@ -6,7 +6,9 @@
      Count from parent: {{ count }}
      <p> У мене залишилося {{ localTrainingCount}} {{training}}.</p>
      <Button label="Зменшити кількість тренувань." @click="handleClick" />
+      Admin:{{localTrainingCount}}
      </template>
+    
  </Card>
  </div>
 </template>
@@ -26,11 +28,12 @@ export default {
   setup(props){
     console.log(props);
     const localTrainingCount = ref(props.count);
+    console.log(props.count);
     const training = ref("тренувань");
     const handleClick = () =>{
       if(localTrainingCount.value > 5 || localTrainingCount.value ==1){
         localTrainingCount.value  = localTrainingCount.value-1;
-        training.value = "тренування";
+        training.value = "тренувань";
       } else if(localTrainingCount.value > 1){
         localTrainingCount.value = localTrainingCount.value-1;
         training.value = "тренування";
@@ -64,7 +67,7 @@ a {
 }
 button{
   border: none;
-  weight: 110px;
+  width: 220px;
   height: 30px;
   background-color: #97c9df ; 
   cursor: pointer;
