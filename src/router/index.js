@@ -6,8 +6,6 @@ const routes = [
     path: '/',
     name: 'Client',
     component: Client
-    //  ,
-    // meta:{keepAlive:true}
   },
   {
     path: '/admin',
@@ -16,8 +14,6 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Admin.vue')
-    // ,
-    // meta:{keepAlive:true}
   }
 ]
 
@@ -28,24 +24,3 @@ const router = createRouter({
 
 
 export default router
-
-
-// import { Router } from 'vue-router'
-// import App from '../App.vue'
-
-// const router=new Router({
-//   mode:'history',
-//   routes: [
-//   {
-//       path: '/',
-//       redirect:'/content',
-//       component: App,
-//       children:[
-//     {path:'/admin', name:'Admin', component:admin,meta:{keepAlive:true}},
-//     ]
-// }
-//   ]
-  
-
-// })
-// export default router

@@ -1,48 +1,41 @@
 <template>
-<div class="hello">
- <Card style="width: 100%; margin-bottom: 2em">
-   <template #title>Gfamily</template>
-   <template #content>
-     Count from parent: {{ count }}
-     <p> У мене залишилося {{ localTrainingCount}} {{training}}.</p>
-     <Button label="Зменшити кількість тренувань." @click="handleClick" />
-      Admin:{{localTrainingCount}}
-     </template>
-    
- </Card>
- </div>
+  <div class="hello">
+    <Card style="width: 100%; margin-bottom: 2em">
+      <template #content>
+        <Button label="Зменшити кількість тренувань." @click="handleClick" />
+        <h2>У мене залишилося {{ count }} {{ pluralform }}.</h2>
+      </template>
+    </Card>
+  </div>
 </template>
 
-<script>
-import Card from "primevue/card";
+ <script>
+//TODO: vuex: trainingcounts move to store
+// Esmodule, next to do git hub everything in main , git comit, branch, rebase?
 import Button from "primevue/button";
-import {ref} from "vue";
+import Card from "primevue/card";
+import { computed } from "vue";
+import { useStore } from "vuex";
 
 export default {
-  props: ["count"],
-  components:{
+  components: {
     Card,
     Button,
   },
-  
-  setup(props){
-    console.log(props);
-    const localTrainingCount = ref(props.count);
-    console.log(props.count);
-    const training = ref("тренувань");
-    const handleClick = () =>{
-      if(localTrainingCount.value > 5 || localTrainingCount.value ==1){
-        localTrainingCount.value  = localTrainingCount.value-1;
-        training.value = "тренувань";
-      } else if(localTrainingCount.value > 1){
-        localTrainingCount.value = localTrainingCount.value-1;
-        training.value = "тренування";
-      } else return;
+  setup() {
+    const store = useStore();
+    const count = computed(() => store.state.count);
+    const handleClick = () => {
+      store.getters.decrease;
     };
+
+    const pluralform = computed(() =>
+      !store.state.count || store.state.count >= 5 ? "тренувань" : "тренування"
+    );
     return {
       handleClick,
-      localTrainingCount,
-      training,
+      pluralform,
+      count,
     };
   },
 };
@@ -50,26 +43,22 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 h3 {
   margin: 40px 0 0;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
+h2 {
+  font-size: 20px;
+  color: rgb(36, 36, 36);
 }
 a {
   color: #42b983;
 }
-button{
+button {
   border: none;
+  margin: 19px;
   width: 220px;
   height: 30px;
-  background-color: #97c9df ; 
+  background-color: #5cc1ec;
   cursor: pointer;
 }
 </style>
