@@ -7,10 +7,14 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "axios": "^0.24.0",
     "core-js": "^3.6.5",
+    "firebase": "^9.6.6",
     "primeicons": "^4.1.0",
     "primevue": "^3.7.1",
     "vue": "^3.0.0",
+    "vue-axios": "^3.4.0",
+    "vue-i18n": "^9.2.0-beta.30",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.2"
   },
