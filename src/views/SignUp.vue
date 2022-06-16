@@ -10,9 +10,10 @@
                 <div class="p-float-label p-input-icon-right">
                     <i class="pi pi-envelope" />
                     <InputText id="email" v-model="v$.email.$model" :class="{
-                        'p-invalid': (v$.email.$invalid && v$.email.$dirty) || error,
+                        'p-invalid': (v$.email.$invalid && v$.email.$dirty) || error === ErrorMessage.EmailNotFound
                     }" aria-describedby="email-error" />
-                    <label for="email" :class="{ 'p-error': (v$.email.$invalid && v$.email.$dirty) || error }">
+                    <label for="email"
+                        :class="{ 'p-error': (v$.email.$invalid && v$.email.$dirty) || error === ErrorMessage.EmailNotFound }">
                         {{ t("email") }}*
                     </label>
                 </div>
@@ -29,7 +30,7 @@
                     </span>
                 </div>
                 <div>
-                    <small v-if="error" class="p-error">{{
+                    <small v-if="error === ErrorMessage.EmailNotFound" class="p-error">{{
                             t('emailExists')
                     }}</small>
                 </div>
@@ -183,6 +184,7 @@ const signUp = async () => {
     }
     try {
         await userStore.signUp(user);
+        await userStore.changeUserData();
         router.push("/client");
     } catch (err: any) {
         error.value = err.message;

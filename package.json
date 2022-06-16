@@ -18,7 +18,6 @@
     "pinia": "^2.0.13",
     "primeflex": "^3.2.1",
     "primevue": "^3.12.6",
-    "ts-enum-util": "^4.0.2",
     "vue": "^3.2.33",
     "vue-i18n": "^9.1.10",
     "vue-router": "^4.0.14"

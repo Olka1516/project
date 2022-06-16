@@ -132,18 +132,18 @@ const onCellEditComplete = (event: { data: any; newValue: number; field: any; } 
     store.onCellEditComplete(event)
 }
 
-const set8 = () => {
+const set8 = async () => {
     userStore.set8(selectedClient.value);
-    customers.fetchClients();
+    await customers.fetchClients();
 };
-const set12 = () => {
+const set12 = async () => {
     userStore.set12(selectedClient.value);
-    customers.fetchClients();
+    await customers.fetchClients();
 };
 
-const decrease = () => {
+const decrease = async () => {
     userStore.decrease(selectedClient.value);
-    customers.fetchClients();
+    await customers.fetchClients();
 };
 
 const quit = async () => {

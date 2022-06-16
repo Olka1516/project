@@ -32,7 +32,6 @@ const signIn = () => {
 };
 </script>
 <style scoped>
-/* @import 'primeflex/primeflex.scss'; */
 .forBackground {
     width: 100%;
     min-height: 100vh;
