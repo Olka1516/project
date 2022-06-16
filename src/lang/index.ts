@@ -1,4 +1,4 @@
-import { createI18n } from "vue-i18n"
+import { createI18n} from "vue-i18n"
 import en from './en';
 import ua from './ua';
 import { datetimeFormats } from "./dateTimeFormats";

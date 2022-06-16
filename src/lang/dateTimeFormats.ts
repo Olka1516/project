@@ -1,4 +1,6 @@
-export const datetimeFormats = {
+import type { DateTimeFormats } from "@intlify/core-base";
+
+export const datetimeFormats: DateTimeFormats = {
   'en': {
     short: {
       year: 'numeric',

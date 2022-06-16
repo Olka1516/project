@@ -1,8 +1,9 @@
 <template>
     <div class="forBackground">
         <header>
-            <h1>Sign In</h1>
-            <h2>Будь ласка, заповніть цю форму, щоб увійти у свій акаунт.</h2>
+            <h1 class="forTop"> <Button class="pi pi-chevron-left icon" @click="returnBack" />{{ t("welcomeBack") }}
+            </h1>
+            <h2>{{ t("fillOut") }}</h2>
             <hr />
         </header>
         <section class="container">
@@ -10,68 +11,64 @@
                 <div class="p-float-label p-input-icon-right">
                     <i class="pi pi-envelope" />
                     <InputText id="email" v-model="v$.email.$model" :class="{
-                        'p-invalid':
-                            (v$.email.$invalid && v$.email.$dirty) ||
-                            error === 'Firebase: Error (auth/user-not-found).',
+                        'p-invalid': (v$.email.$invalid && v$.email.$dirty) || error === ErrorMessage.EmailNotFound
                     }" aria-describedby="email-error" />
                     <label for="email" :class="{
-                        'p-error':
-                            (v$.email.$invalid && v$.email.$dirty) ||
-                            error === 'Firebase: Error (auth/user-not-found).',
-                    }">Email*</label>
+                        'p-error': (v$.email.$invalid && v$.email.$dirty) || error === ErrorMessage.EmailNotFound
+                    }">
+                        {{ t("email") }}*
+                    </label>
                 </div>
-                <span v-if="
-                    (v$.email.$error && v$.email.$dirty) ||
-                    error === 'Firebase: Error (auth/user-not-found).'
-                ">
-                    <span id="email-error" v-for="(error, index) of v$.email.$errors" :key="index">
-                        <small class="p-error">{{ error.$message }}</small>
+                <div>
+                    <span v-if="(v$.email.$error && v$.email.$dirty)">
+                        <span id="email-error" v-for="(error, index) of v$.email.$errors" :key="index">
+                            <small v-if="error.$message === ErrorMessage.EmailIsRequired" class="p-error">{{
+                                    t("requiredEmail")
+                            }}</small>
+                            <small v-if="error.$message === ErrorMessage.EmailIsNotValid" class="p-error">{{
+                                    t("emailNotValid")
+                            }}</small>
+                        </span>
                     </span>
-                </span>
-                <small v-else-if="
-                    (v$.email.$invalid && v$.email.$dirty) ||
-                    v$.email.$pending
-                " class="p-error">{{ v$.email.required.$message }}</small>
-                <small v-if="error === 'Firebase: Error (auth/user-not-found).'" class="p-error">{{
-                        error.replace(
-                            "Firebase: Error (auth/user-not-found).",
-                            "\nEmail is incorrect. Please try again"
-                        )
-                }}</small>
+                </div>
+                <div>
+                    <small v-if="error === ErrorMessage.EmailNotFound" class="p-error pr-1">
+                        {{ t('wrongEmail') }}
+                    </small>
+                </div>
             </div>
             <div class="field">
                 <div class="p-float-label">
                     <Password id="password" v-model="v$.password.$model" :class="{
                         'p-invalid':
-                            (v$.password.$invalid && v$.password.$dirty) ||
-                            error === 'Firebase: Error (auth/wrong-password).',
+                            (v$.password.$invalid && v$.password.$dirty) || error === ErrorMessage.PasswordNotFound
                     }" toggleMask :feedback="false">
                     </Password>
                     <label for="password" :class="{
                         'p-error':
                             (v$.password.$invalid && v$.password.$dirty) ||
-                            error === 'Firebase: Error (auth/wrong-password).',
-                    }">Password*</label>
+                            error === ErrorMessage.PasswordNotFound
+                    }">
+                        {{ t("password") }}*
+                    </label>
                 </div>
-                <small v-if="
-                    (v$.password.$invalid && v$.password.$dirty) ||
-                    v$.password.$pending
-                " class="p-error">{{
-        v$.password.required.$message.replace("Value", "Password")
-}}</small>
-                <small v-if="error === 'Firebase: Error (auth/wrong-password).'" class="p-error">{{
-                        error.replace(
-                            "Firebase: Error (auth/wrong-password).",
-                            "\nPassword is incorrect. Please try again."
-                        )
-                }}</small>
+                <div>
+                    <small v-if="(v$.password.$invalid && v$.password.$dirty) || v$.password.$pending" class="p-error">
+                        {{ t('requiredPassword') }}
+                    </small>
+                </div>
+                <div>
+                    <small v-if="error === ErrorMessage.PasswordNotFound" class="p-error">
+                        {{ t('wrongPassword') }}
+                    </small>
+                </div>
             </div>
-            <Button label="Forgot password?" class="p-button-link" @click="resetPas" />
+            <Button :label='t("forgotPassword")' class="p-button-link" @click="resetPas" />
         </section>
         <footer>
-            <Button class="signBtn" type="submit" @click="signIn" label="Login" />
+            <Button class="signBtn" type="submit" @click="signIn" :label='t("login")' />
             <div class="rememberBtn">
-                <h4>Remember me</h4>
+                <h4>{{ t("rememberMe") }}</h4>
                 <input type="checkbox" checked name="remember" />
             </div>
         </footer>
@@ -82,11 +79,14 @@ import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
 import { email, required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
-import { useUserStore } from "../stores";
+import { useUserStore } from "@/stores";
+import ErrorMessage from "@/components";
+import { useI18n } from "vue-i18n";
 
 const router = useRouter();
 const userStore = useUserStore();
-const error = ref(null);
+const error = ref('');
+const { t } = useI18n();
 const user = reactive({
     email: "sasha@gmail.com",
     password: "123456",
@@ -99,7 +99,6 @@ const v$ = useVuelidate(rules, user);
 const signIn = async () => {
     const isFormCorrect = await v$.value.$validate();
     if (!isFormCorrect) {
-        console.log("Not valid");
         return;
     }
     try {
@@ -114,57 +113,22 @@ const signIn = async () => {
 const resetPas = async () => {
     router.push("/resetPassword");
 };
+
+const returnBack = () => {
+    router.back();
+}
 </script>
 
 <style scoped>
-.forBackground {
-    width: 100%;
-    min-height: 100vh;
-    background-color: #ebd7c3;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-input {
-    padding-bottom: 10px;
-    border: 1px solid #ccc;
-}
-
-.container {
-    width: 550px;
-    text-align: left;
-}
+@import "@/assets/style.css";
 
 .signBtn {
-    margin: 5px 50px 18px;
-    padding: 8px 50px;
-    background-color: #00589B;
-    border: none;
-}
-
-.p-input-icon-right {
-    width: 100%;
-    border: none;
-}
-
-.field {
-    margin-top: 1.7rem;
+    margin-top: 5px;
 }
 
 footer {
-    width: 550px;
-    margin-top: 5px;
     display: inline-flex;
     justify-content: flex-end;
-    align-items: center;
-}
-
-.rememberBtn {
-    width: 150px;
-    display: flex;
-    align-items: center;
 }
 
 @media screen and (max-width: 576px) {

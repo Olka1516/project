@@ -9,6 +9,9 @@ import Divider from "primevue/divider";
 import Password from "primevue/password";
 import Calendar from "primevue/calendar";
 import Sidebar from 'primevue/sidebar';
+import DataTable from "primevue/datatable";
+import Column from "primevue/column";
+import InputNumber from "primevue/inputnumber";
 import ToastService from 'primevue/toastservice';
 import "primevue/resources/themes/saga-blue/theme.css"
 import "primevue/resources/primevue.min.css"
@@ -30,7 +33,7 @@ initializeApp({
     measurementId: "G-0Z1DMMLLHZ"
 });
 
-const auth = getAuth();
+getAuth();
 
 const app = createApp(App);
 
@@ -41,5 +44,5 @@ app.use(i18n);
 app.use(ToastService)
 
 app.mount("#app");
-app.component("Button", Button).component("Sidebar", Sidebar).component("InputText", InputText)
+app.component("Button", Button).component("DataTable", DataTable).component("Column", Column).component("InputNumber", InputNumber).component("Sidebar", Sidebar).component("InputText", InputText)
     .component("Divider", Divider).component("Password", Password).component("Calendar", Calendar)

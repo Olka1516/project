@@ -2,7 +2,7 @@ import { getClients } from "./firebaseService"
 import { defineStore } from 'pinia'
 import { reactive, toRefs } from "vue";
 
-export interface StoreClients {
+export interface Client {
     count: number;
     name: string;
     phone: string;
@@ -12,12 +12,8 @@ export interface StoreClients {
     inTrainings: string;
 }
 
-export interface State {
-    storeClients: StoreClients[]
-}
-
 export const useClientsStore = defineStore('clients', () => {
-    let state: State = reactive({
+    let state: {storeClients: Client[]} = reactive({
         storeClients: []
     })
 

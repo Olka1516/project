@@ -3,24 +3,26 @@
         <header>
             <img src="../assets/logo.png" alt="" class="logoInner" />
             <div class="text">
-                <h1>Hello, friend</h1>
-                <h2>Create account to use this program</h2>
+                <h1>{{ t('welcome') }}</h1>
+                <h2>{{ t('createAccount') }}</h2>
             </div>
         </header>
         <footer>
-            <Button label="Sign up" type="submit" @click="signUp" class="p-button-raised p-button-danger" />
+            <Button :label="t('signUpBtn')" type="submit" @click="signUp" class="p-button-raised p-button-danger" />
             <h2>
-                Already have an account? Cool!
+                {{ t('signIn') }}
                 <th />
-                <Button label="Sing in" @click="signIn" class="signInBtn" />
-                then
+                <Button :label="t('signInBtn')" @click="signIn" class="signInBtn" />
+                {{ t('then') }}
             </h2>
         </footer>
     </div>
 </template>
  <script setup lang="ts">
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const router = useRouter();
 const signUp = () => {
     router.push("/signUp");
@@ -30,6 +32,7 @@ const signIn = () => {
 };
 </script>
 <style scoped>
+/* @import 'primeflex/primeflex.scss'; */
 .forBackground {
     width: 100%;
     min-height: 100vh;

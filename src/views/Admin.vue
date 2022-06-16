@@ -106,89 +106,31 @@
     </div>
 </template>
 <script setup lang="ts">
-import Button from "primevue/button";
-import InputText from "primevue/inputtext";
-import Calendar from "primevue/calendar";
-import DataTable from "primevue/datatable";
-import Sidebar from 'primevue/sidebar';
-import Column from "primevue/column";
-import InputNumber from "primevue/inputnumber";
-import { FilterMatchMode, FilterOperator } from "primevue/api";
+import { ref, onMounted, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { useClientsStore } from "@/service";
-import { useUserStore } from "@/stores";
-import { ref, onMounted, computed, reactive } from "vue";
+import { useUserStore, useStore } from "@/stores";
 
 const userStore = useUserStore();
-const { t, d, locale } = useI18n();
+const store = useStore();
+const customers = useClientsStore();
 const router = useRouter();
+const { t, d, locale } = useI18n();
 const selectedClient = ref();
 const loading = ref(true);
 const visibleLeft = ref(false);
 const name = computed(() => userStore.name);
-const customers = useClientsStore();
-onMounted(() => {
-    customers.fetchClients();
+const filters = ref(store.filters);
+
+onMounted(async () => {
+    await customers.fetchClients();
     loading.value = false;
 });
-const quit = async () => {
-    await userStore.signOutClient()
-    await router.push("/");
-}
-const filters: any = ref({
-    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    name: {
-        operator: FilterOperator.AND,
-        constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }],
-    },
-    role: {
-        operator: FilterOperator.AND,
-        constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }],
-    },
-    count: {
-        operator: FilterOperator.AND,
-        constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }],
-    },
-    date: {
-        operator: FilterOperator.AND,
-        constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }],
-    },
-    phone: {
-        operator: FilterOperator.AND,
-        constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }],
-    },
-});
+
 const onCellEditComplete = (event: { data: any; newValue: number; field: any; } | any) => {
-    let { data, newValue, field } = event;
-    switch (field) {
-        case 'count':
-            if (isPositiveInteger(newValue)) {
-                userStore.changeCount(data.id, newValue);
-                data[field] = newValue;
-            } else {
-                event.preventDefault();
-            }
-            break;
-        default:
-            console.log("new value trim", newValue.trim())
-            if (newValue.trim().length > 0)
-                data[field] = newValue;
-            else
-                event.preventDefault();
-            break;
-    }
-};
-const isPositiveInteger = (val: number) => {
-    let str = String(val);
-    str = str.trim();
-    if (!str) {
-        return false;
-    }
-    str = str.replace(/^0+/, "") || "0";
-    var n = Math.floor(Number(str));
-    return n !== Infinity && String(n) === str && n >= 0;
-};
+    store.onCellEditComplete(event)
+}
 
 const set8 = () => {
     userStore.set8(selectedClient.value);
@@ -203,6 +145,11 @@ const decrease = () => {
     userStore.decrease(selectedClient.value);
     customers.fetchClients();
 };
+
+const quit = async () => {
+    await userStore.signOutClient()
+    await router.push("/");
+}
 </script>
 <style scoped>
 .forBackground {

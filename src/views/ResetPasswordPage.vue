@@ -1,15 +1,17 @@
 <template>
     <div class="forBackground">
-        <div class="container">
             <Toast />
-            <h1>Reset password</h1>
-            <h2>Будь ласка, напишіть свій емейл, щоб відновити пароль.</h2>
-            <hr />
             <header>
+                <h1 class="forTop"> <Button class="pi pi-chevron-left icon" @click="returnBack" />{{ t("resetPassword")
+                }}
+                </h1>
+                <h2>{{ t("resetPasswordText") }}</h2>
+                <hr />
+            </header>
+            <section class="container">
                 <div class="field">
                     <div class="p-float-label p-input-icon-right">
                         <i class="pi pi-envelope" />
-
                         <InputText id="email" v-model="v$.userEmail.$model" :class="{
                             'p-invalid':
                                 (v$.userEmail.$invalid && v$.userEmail.$dirty) ||
@@ -20,15 +22,17 @@
                             'p-error':
                                 (v$.userEmail.$invalid && v$.userEmail.$dirty) ||
                                 error === 'Firebase: Error (auth/user-not-found).',
-                        }">Email*</label>
+                        }">{{ t("email") }}*</label>
                     </div>
                     <span v-if="
                         (v$.userEmail.$error && v$.userEmail.$dirty) ||
                         error === 'Firebase: Error (auth/user-not-found).'
                     ">
-                        <span id="email-error" v-for="(error, index) of v$.userEmail.$errors" :key="index">
-                            <small class="p-error">{{ error.$message }}</small>
-                        </span>
+                <span v-if="(v$.userEmail.$error && v$.userEmail.$dirty) || error === 'Firebase: Error (auth/user-not-found).'">
+                    <small v-if="(v$.userEmail.$invalid && v$.userEmail.$dirty) || v$.userEmail.$pending" class="p-error">{{
+                            v$.userEmail.required.$message.replace("Value", "Email")
+                    }}</small>
+                </span>
                     </span>
                     <small v-else-if="
                         (v$.userEmail.$invalid && v$.userEmail.$dirty) ||
@@ -41,9 +45,10 @@
                             )
                     }}</small>
                 </div>
-            </header>
-            <Button class="resetBtn" type="submit" @click="resetPas" label="Reset" />
-        </div>
+            </section>
+            <footer>
+                <Button class="signBtn" type="submit" @click="resetPas" :label='t("resetPasswordBtn")' />
+            </footer>
     </div>
 </template>
 <script setup lang="ts">
@@ -53,11 +58,15 @@ import { useVuelidate } from "@vuelidate/core";
 import { useUserStore } from "../stores";
 import { useToast } from 'primevue/usetoast';
 import Toast from 'primevue/toast';
+import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
 
+const { t } = useI18n();
 const userStore = useUserStore();
 const toast = useToast();
-const error = ref(null);
+const error = ref('');
 const userEmail = ref("");
+const router = useRouter();
 
 const rules = {
     userEmail: { required, email },
@@ -76,40 +85,11 @@ const resetPas = async () => {
         error.value = err.message;
     }
 };
+
+const returnBack = () => {
+    router.back();
+}
 </script>
 <style scoped>
-.forBackground {
-    width: 100%;
-    min-height: 100vh;
-    background-color: #ebd7c3;
-    display: inline-flex;
-    justify-content: center;
-    text-align: center;
-}
-
-input {
-    padding-bottom: 10px;
-    border: 1px solid #ccc;
-}
-
-header {
-    padding: 26px 0 6px;
-    text-align: left;
-}
-
-.resetBtn {
-    margin: 5px 0 18px 0;
-    padding: 8px 50px;
-    background-color: #00589B;
-    border: none;
-}
-
-.field {
-    margin-bottom: 1.6rem;
-}
-
-.p-input-icon-right {
-    width: 100%;
-    border: none;
-}
+@import "@/assets/style.css";
 </style>

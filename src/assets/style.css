@@ -1,0 +1,80 @@
+.forBackground {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #ebd7c3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.forTop {
+    display: flex;
+}
+
+input {
+    padding-bottom: 10px;
+    border: 1px solid #ccc;
+}
+
+header {
+    width: 530px;
+    margin-top: 8px;
+}
+
+.container {
+    width: 550px;
+    text-align: left;
+}
+
+.field {
+    margin-top: 1.7rem;
+}
+
+.icon {
+    margin: 0 55px 0 55px;
+    border: none;
+    background: none;
+    color: #000
+}
+
+.icon:hover {
+    border: none;
+    background: none;
+}
+
+.p-input-icon-right {
+    width: 100%;
+    border: none;
+}
+
+.rememberBtn {
+    width: 160px;
+    display: flex;
+    align-items: center;
+}
+
+.calenBtn {
+    width: 100%;
+}
+
+footer {
+    margin-top: 8px;
+    width: 550px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+h4 {
+    min-width: 132px;
+}
+
+.signBtn {
+    margin: 20px 50px 18px;
+    padding-bottom: 10px;
+    width: 150px;
+    height: 40px;
+    background-color: #00589B;
+    border: none;
+}
