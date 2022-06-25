@@ -55,12 +55,14 @@ export const signUpByUserEmailAndPassword = async (email: string, password: stri
   await setPersistence(auth, browserSessionPersistence);
   await createUserWithEmailAndPassword(auth, email, password);
   await setDoc(doc(db, "clients", auth.currentUser!.uid), {
-    name: name,
-    phone: phone,
-    date: date,
+    name,
+    phone,
+    date,
+    email,
     count: 0,
     role: "client",
     id: auth.currentUser!.uid,
+    inTrainings: "Not in training"
   })
 }
 

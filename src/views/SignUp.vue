@@ -7,131 +7,28 @@
         </header>
         <div class="container">
             <div class="field">
-                <div class="p-float-label p-input-icon-right">
-                    <i class="pi pi-envelope" />
-                    <InputText id="email" v-model="v$.email.$model" :class="{
-                        'p-invalid': (v$.email.$invalid && v$.email.$dirty) || error === ErrorMessage.EmailNotFound
-                    }" aria-describedby="email-error" />
-                    <label for="email"
-                        :class="{ 'p-error': (v$.email.$invalid && v$.email.$dirty) || error === ErrorMessage.EmailNotFound }">
-                        {{ t("email") }}*
-                    </label>
-                </div>
-                <div>
-                    <span v-if="(v$.email.$error && v$.email.$dirty)">
-                        <span id="email-error" v-for="(error, index) of v$.email.$errors" :key="index">
-                            <small v-if="error.$message === ErrorMessage.EmailIsRequired" class="p-error">{{
-                                    t("requiredEmail")
-                            }}</small>
-                            <small v-if="error.$message === ErrorMessage.EmailIsNotValid" class="p-error">{{
-                                    t("emailNotValid")
-                            }}</small>
-                        </span>
-                    </span>
-                </div>
-                <div>
-                    <small v-if="error === ErrorMessage.EmailNotFound" class="p-error">{{
-                            t('emailExists')
-                    }}</small>
-                </div>
+                <EmailInput v-model="v$.email.$model" :v="v$.email" :error="error" />
+                <EmailErrorMessage :v="v$.email" :error="error" translation="emailIsNotValid" />
             </div>
             <div class="field">
-                <div class="p-float-label">
-                    <Password id="password" v-model="v$.password.$model" :class="{
-                        'p-invalid': v$.password.$invalid && v$.password.$dirty,
-                    }" toggleMask>
-                        <template #header>
-                            <h6>{{ t("pickPassword") }}</h6>
-                        </template>
-                        <template #footer="sp: any">
-                            {{ sp.level }}
-                            <Divider />
-                            <p class="mt-2">{{ t("suggestions") }}</p>
-                            <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
-                                <li>{{ t("oneLowercase") }}</li>
-                                <li>{{ t("oneUppercase") }}</li>
-                                <li>{{ t("oneNumeratic") }}</li>
-                                <li>{{ t("minimumEight") }}</li>
-                            </ul>
-                        </template>
-                    </Password>
-                    <label for="password" :class="{ 'p-error': v$.password.$invalid && v$.password.$dirty }">
-                        {{ t("password") }}*
-                    </label>
-                </div>
-                <div>
-                    <small v-if="v$.password.$model === '' && v$.password.$dirty" class="p-error">
-                        {{ t('requiredPassword') }}
-                    </small>
-                </div>
-                <div>
-                    <small v-if="v$.password.minLength.$invalid && !v$.password.minLength.$response" class="p-error">
-                        {{ t('passwordRequiredMinLength') }}
-                    </small>
-                </div>
+                <PasswordInput v-model="v$.password.$model" :v="v$.password" :error="error" />
+                <PasswordErrorMessage v-model="v$.password.$model" :v="v$.password" />
             </div>
             <div class="field">
-                <div class="p-float-label">
-                    <Password id="confirmPassword" v-model="v$.confirmPassword.$model" :class="{
-                        'p-invalid':
-                            v$.confirmPassword.$invalid && v$.confirmPassword.$dirty,
-                    }" toggleMask :feedback="false">
-                    </Password>
-                    <label for="confirmPassword"
-                        :class="{ 'p-error': v$.confirmPassword.$invalid && v$.confirmPassword.$dirty }">
-                        {{ t("confirmPassword") }}*
-                    </label>
-                </div>
-                <div>
-                    <small v-if="v$.confirmPassword.$model === '' && v$.confirmPassword.$dirty" class="p-error">
-                        {{ t("requiredPassword") }}
-                    </small>
-                </div>
-                <div>
-                    <small
-                        v-if="!v$.confirmPassword.sameAs.$pending && v$.confirmPassword.sameAs.$invalid && v$.confirmPassword.$dirty"
-                        class="p-error">
-                        {{ t("PasswordMustBeEqual") }}
-                    </small>
-                </div>
+                <ConfirmPasswordInput v-model="v$.confirmPassword.$model" :v="v$.confirmPassword" />
+                <PasswordErrorMessage v-model="v$.confirmPassword.$model" :v="v$.confirmPassword" />
             </div>
             <div class="field">
-                <div class="p-float-label p-input-icon-right">
-                    <i class="pi pi-user" />
-                    <InputText id="name" v-model="v$.name.$model"
-                        :class="{ 'p-invalid': v$.name.$invalid && v$.name.$dirty }" />
-                    <label for="name" :class="{ 'p-error': v$.name.$invalid && v$.name.$dirty }">
-                        {{ t("name") }}*
-                    </label>
-                </div>
-                <small v-if="(v$.name.$invalid && v$.name.$dirty) || v$.name.$pending" class="p-error">
-                    {{ t("requiredName") }}
-                </small>
+                <NameInput v-model="v$.name.$model" :v="v$.name" />
+                <NameDatePhoneErrors name="name" :v="v$.name" />
             </div>
             <div class="field">
-                <div class="p-float-label">
-                    <Calendar class="calenBtn" id="date" v-model="user.date" :showIcon="true" />
-                    <label for="date">
-                        {{ t("fillOutBirthday") }}*
-                    </label>
-                </div>
-                <small v-if="(v$.date.$invalid && v$.date.$dirty) || v$.date.$pending" class="p-error">
-                    {{ t("requiredDate") }}
-                </small>
+                <DateInput v-model="v$.date.$model" :v="v$.date" />
+                <NameDatePhoneErrors name="date" :v="v$.date" />
             </div>
             <div class="field">
-                <div class="p-float-label p-input-icon-right">
-                    <i class="pi pi-phone" />
-                    <InputText id="phone" v-model="v$.phone.$model" :class="{
-                        'p-invalid': v$.phone.$invalid && v$.phone.$dirty,
-                    }" />
-                    <label for="phone" :class="{ 'p-error': v$.phone.$invalid && v$.phone.$dirty }">
-                        {{ t("fillOutPhone") }}*
-                    </label>
-                </div>
-                <small v-if="(v$.phone.$invalid && v$.phone.$dirty) || v$.phone.$pending" class="p-error">
-                    {{ t("requiredPhone") }}
-                </small>
+                <PhoneInput v-model="v$.phone.$model" :v="v$.phone" />
+                <NameDatePhoneErrors name="phone" :v="v$.phone" />
             </div>
         </div>
         <footer>
@@ -149,8 +46,16 @@ import { useRouter } from "vue-router";
 import { email, required, sameAs, minLength } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import { useUserStore } from "@/stores";
-import ErrorMessage from "@/components";
 import { useI18n } from "vue-i18n";
+import EmailInput from "@/components/textInput/EmailInput.vue";
+import PasswordInput from "@/components/textInput/PasswordInputFromSignUp.vue";
+import ConfirmPasswordInput from "@/components/textInput/ConfirmPasswordInput.vue";
+import NameInput from "@/components/textInput/NameInput.vue";
+import DateInput from "@/components/textInput/DateInput.vue";
+import PhoneInput from "@/components/textInput/PhoneInput.vue";
+import EmailErrorMessage from "@/components/errors/EmailErrorMessage.vue";
+import PasswordErrorMessage from "@/components/errors/PasswordErrorSignUp.vue";
+import NameDatePhoneErrors from "@/components/errors/NameDatePhoneErrors.vue";
 
 const { t } = useI18n();
 const userStore = useUserStore();

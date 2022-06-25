@@ -8,60 +8,12 @@
         </header>
         <section class="container">
             <div class="field">
-                <div class="p-float-label p-input-icon-right">
-                    <i class="pi pi-envelope" />
-                    <InputText id="email" v-model="v$.email.$model" :class="{
-                        'p-invalid': (v$.email.$invalid && v$.email.$dirty) || error === ErrorMessage.EmailNotFound
-                    }" aria-describedby="email-error" />
-                    <label for="email" :class="{
-                        'p-error': (v$.email.$invalid && v$.email.$dirty) || error === ErrorMessage.EmailNotFound
-                    }">
-                        {{ t("email") }}*
-                    </label>
-                </div>
-                <div>
-                    <span v-if="(v$.email.$error && v$.email.$dirty)">
-                        <span id="email-error" v-for="(error, index) of v$.email.$errors" :key="index">
-                            <small v-if="error.$message === ErrorMessage.EmailIsRequired" class="p-error">{{
-                                    t("requiredEmail")
-                            }}</small>
-                            <small v-if="error.$message === ErrorMessage.EmailIsNotValid" class="p-error">{{
-                                    t("emailNotValid")
-                            }}</small>
-                        </span>
-                    </span>
-                </div>
-                <div>
-                    <small v-if="error === ErrorMessage.EmailNotFound" class="p-error pr-1">
-                        {{ t('wrongEmail') }}
-                    </small>
-                </div>
+                <EmailInput v-model="v$.email.$model" :v="v$.email" :error="error" />
+                <EmailErrorMessage :v="v$.email" :error="error" translation="wrongEmail" />
             </div>
             <div class="field">
-                <div class="p-float-label">
-                    <Password id="password" v-model="v$.password.$model" :class="{
-                        'p-invalid':
-                            (v$.password.$invalid && v$.password.$dirty) || error === ErrorMessage.PasswordNotFound
-                    }" toggleMask :feedback="false">
-                    </Password>
-                    <label for="password" :class="{
-                        'p-error':
-                            (v$.password.$invalid && v$.password.$dirty) ||
-                            error === ErrorMessage.PasswordNotFound
-                    }">
-                        {{ t("password") }}*
-                    </label>
-                </div>
-                <div>
-                    <small v-if="(v$.password.$invalid && v$.password.$dirty) || v$.password.$pending" class="p-error">
-                        {{ t('requiredPassword') }}
-                    </small>
-                </div>
-                <div>
-                    <small v-if="error === ErrorMessage.PasswordNotFound" class="p-error">
-                        {{ t('wrongPassword') }}
-                    </small>
-                </div>
+                <PasswordInput v-model="user.password" :v="v$.password" :error="error" />
+                <PasswordErrorMessage :v="v$.password" :error="error" />
             </div>
             <Button :label='t("forgotPassword")' class="p-button-link" @click="resetPas" />
         </section>
@@ -80,8 +32,11 @@ import { useRouter } from "vue-router";
 import { email, required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import { useUserStore } from "@/stores";
-import ErrorMessage from "@/components";
 import { useI18n } from "vue-i18n";
+import EmailInput from "@/components/textInput/EmailInput.vue";
+import EmailErrorMessage from "@/components/errors/EmailErrorMessage.vue";
+import PasswordErrorMessage from "@/components/errors/PasswordErrorMessage.vue";
+import PasswordInput from "@/components/textInput/PasswordInput.vue";
 
 const router = useRouter();
 const userStore = useUserStore();
