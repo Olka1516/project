@@ -134,7 +134,6 @@ const onCellEditComplete = (event: { data: any; newValue: number; field: any; } 
 }
 
 const set8 = async () => {
-    console.log("Its workk")
     userStore.set8(selectedClient.value);
     await customers.fetchClients();
 };
