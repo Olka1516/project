@@ -1,7 +1,7 @@
 <template>
     <div class="p-float-label p-input-icon-right">
         <i class="pi pi-envelope" />
-        <InputText id="email" v-model="userEmail" @input="handleInput" :class="{
+        <InputText id="email" v-model="userEmail" @input="handleInput($event); props.v.$touch()" :class="{
             'p-invalid': isEmailInvalid()
         }" aria-describedby="email-error" />
         <label for="email" :class="{ 'p-error': isEmailInvalid() }">
@@ -10,17 +10,18 @@
     </div>
 </template>
 <script setup lang="ts">
-import { ErrorMessage } from '@/types';
+import { ErrorMessageEnum } from '@/types';
 import { ref, watch } from 'vue';
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const props = defineProps<{
-    modelValue: string,
+    modelValue: string
     v: {
-        $invalid: boolean,
-        $dirty: boolean,
-    },
+        $invalid: boolean
+        $dirty: boolean
+        $touch: Function
+    }
     error: string
 }>()
 
@@ -37,7 +38,7 @@ const handleInput = (event: any) => {
 
 const isEmailInvalid = () => {
     return (props.v.$invalid && props.v.$dirty) ||
-        (props.error === ErrorMessage.EmailNotFound || props.error === ErrorMessage.EmailInUse);
+        (props.error === ErrorMessageEnum.EmailNotFound || props.error === ErrorMessageEnum.EmailInUse);
 }
 watch(() => props.modelValue, (data) => {
     userEmail.value = data;

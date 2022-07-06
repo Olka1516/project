@@ -29,7 +29,7 @@
                 filterDisplay="menu" :loading="loading"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 :rowsPerPageOptions="[10, 25, 50]"
-                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                :currentPageReportTemplate="t('showPage.1') + '{first}' + t('showPage.2') + '{last}' + t('showPage.3') + '{totalRecords}' + t('showPage.4')"
                 :globalFilterFields="['name', 'role', 'phone']" responsiveLayout="scroll">
                 <template #header>
                     <div class="tableTop">
@@ -38,6 +38,7 @@
                             <i class="pi pi-search" />
                             <InputText v-model="filters['global'].value" placeholder='Search' />
                         </span>
+                        <Button @click="refresh" icon="pi pi-refresh" />
                     </div>
                 </template>
                 <template #empty>{{ t("noCustomers") }}</template>
@@ -106,6 +107,7 @@
     </div>
 </template>
 <script setup lang="ts">
+
 import { ref, onMounted, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
@@ -146,78 +148,16 @@ const decrease = async () => {
     await customers.fetchClients();
 };
 
+const refresh = async () => {
+    await customers.fetchClients();
+};
+
 const quit = async () => {
     await userStore.signOutClient()
     await router.push("/");
 }
 </script>
 <style scoped>
-.forBackground {
-    width: 100%;
-    min-height: 100vh;
-    background-color: #D0E5EC;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-.setCountTrainings {
-    color: white;
-    border: none;
-    margin: 40px 15px;
-    width: 220px;
-    height: 23px;
-    background-color: #00589B;
-    border-radius: 0.25rem;
-    padding: 0;
-    display: inline-block;
-    font-size: 14px;
-}
-
-header {
-    height: 80px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-
-h1 {
-    font-size: 40px;
-}
-
-h2 {
-    font-size: 20px;
-}
-
-.table {
-    padding: 30px;
-}
-
-.tableTop {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.settingBtn {
-    margin: 10px;
-    border: none;
-    background-color: #00589B;
-    border-radius: 18px;
-}
-
-button.settingBtn:hover {
-    background-color: #2196F3;
-}
-
-.p-button-text {
-    margin-left: 34px;
-}
-
-@media screen and (max-width: 992px) {
-    .table {
-        padding: 0;
-    }
-}
+@import "@/assets/adminPage.css";
 </style>
  

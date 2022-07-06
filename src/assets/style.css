@@ -1,38 +1,24 @@
 .forBackground {
-    width: 100%;
     min-height: 100vh;
     background-color: #ebd7c3;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-.forTop {
-    display: flex;
-}
-
-input {
-    padding-bottom: 10px;
-    border: 1px solid #ccc;
-}
-
-header {
-    width: 530px;
-    margin-top: 8px;
+    justify-content: space-around;
 }
 
 .container {
     width: 550px;
-    text-align: left;
+}
+
+header {
+    text-align: center;
 }
 
 .field {
-    margin-top: 1.7rem;
+    margin-top: 2.4rem;
 }
 
 .icon {
-    margin: 0 55px 0 55px;
+    margin-right: 30px;
     border: none;
     background: none;
     color: #000
@@ -48,33 +34,113 @@ header {
     border: none;
 }
 
-.rememberBtn {
-    width: 160px;
-    display: flex;
-    align-items: center;
-}
-
 .calenBtn {
     width: 100%;
 }
 
-footer {
-    margin-top: 8px;
-    width: 550px;
+.foot {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: space-between;
 }
 
-h4 {
-    min-width: 132px;
+.forgotPassword {
+    margin-top: 10px;
 }
 
 .signBtn {
-    margin: 20px 50px 18px;
+    margin: 30px 0;
     padding-bottom: 10px;
-    width: 150px;
+    width: 100%;
     height: 40px;
     background-color: #00589B;
     border: none;
+}
+
+
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
+    opacity: 0;
+    pointer-events: none
+}
+
+[type="checkbox"]+span:not(.lever) {
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    display: inline-block;
+    height: 25px;
+    line-height: 25px;
+    font-size: 1rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
+
+[type="checkbox"]+span:not(.lever):before,
+[type="checkbox"]:not(.filled-in)+span:not(.lever):after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    z-index: 0;
+    border: 2px solid #5a5a5a;
+    border-radius: 1px;
+    margin-top: 3px;
+    -webkit-transition: .2s;
+    transition: .2s
+}
+
+[type="checkbox"]:not(.filled-in)+span:not(.lever):after {
+    border: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0)
+}
+
+[type="checkbox"]:checked+span:not(.lever):before {
+    top: -4px;
+    left: -5px;
+    width: 12px;
+    height: 21px;
+    border-top: 2px solid transparent;
+    border-left: 2px solid transparent;
+    border-right: 2px solid #2571ac;
+    border-bottom: 2px solid #2571ac;
+    -webkit-transform: rotate(40deg);
+    transform: rotate(40deg);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform-origin: 100% 100%;
+    transform-origin: 100% 100%
+}
+
+@media screen and (max-width: 550px) {
+    .container {
+        max-width: 450px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .container {
+        max-width: 315px;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+
+    h2 {
+        font-size: 16px;
+    }
+
+    .foot {
+        margin-bottom: 80px;
+    }
+
+    .forgotPassword {
+        padding: 0;
+        margin-top: 15px;
+    }
 }

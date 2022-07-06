@@ -1,7 +1,7 @@
 <template>
     <div class="p-float-label p-input-icon-right">
         <i class="pi pi-phone" />
-        <InputText id="phone" v-model="userPhone" @input="handleInput" :class="{
+        <InputText id="phone" v-model="userPhone" @input="handleInput($event); props.v.$touch()" :class="{
             'p-invalid': isPhoneInvalid()
         }" />
         <label for="phone" :class="{ 'p-error': isPhoneInvalid() }">
@@ -20,6 +20,7 @@ const props = defineProps<{
     v: {
         $invalid: boolean
         $dirty: boolean
+                $touch: Function
     }
 }>()
 

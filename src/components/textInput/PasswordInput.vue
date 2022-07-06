@@ -1,6 +1,6 @@
 <template>
     <div class="p-float-label">
-        <Password id="password" v-model="userPassword" @input="handleInput" :class="{
+        <Password id="password" v-model="userPassword" @input="handleInput($event); props.v.$touch()" :class="{
             'p-invalid': isPasswordInvalid()
         }" toggleMask :feedback="false"></Password>
         <label for="password" :class="{ 'p-error': isPasswordInvalid() }">
@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { ErrorMessage } from '@/types';
+import { ErrorMessageEnum } from '@/types';
 import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
@@ -21,6 +21,7 @@ const props = defineProps<{
     v: {
         $invalid: boolean
         $dirty: boolean
+        $touch: Function
     }
     error: string
 }>()
@@ -38,7 +39,7 @@ const handleInput = (event: any) => {
 }
 
 const isPasswordInvalid = () => {
-    return (props.v.$invalid && props.v.$dirty) || props.error === ErrorMessage.PasswordNotFound;
+    return (props.v.$invalid && props.v.$dirty) || props.error === ErrorMessageEnum.PasswordNotFound;
 
 }
 watch(() => props.modelValue, (data) => {

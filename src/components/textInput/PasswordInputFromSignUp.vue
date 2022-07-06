@@ -1,6 +1,6 @@
 <template>
     <div class="p-float-label">
-        <Password id="password" v-model="userPassword" @input="handleInput" :class="{
+        <Password id="password" v-model="userPassword" @input="handleInput($event); props.v.$touch()" :class="{
             'p-invalid': isPasswordInvalid()
         }" toggleMask>
             <template #header>
@@ -35,6 +35,7 @@ const props = defineProps<{
     v: {
         $invalid: boolean
         $dirty: boolean
+        $touch: Function
     }
 }>()
 

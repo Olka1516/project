@@ -1,29 +1,33 @@
 <template>
     <div class="forBackground">
-        <header>
-            <h1 class="forTop"> <Button class="pi pi-chevron-left icon" @click="returnBack" />{{ t("welcomeBack") }}
-            </h1>
-            <h2>{{ t("fillOut") }}</h2>
-            <hr />
-        </header>
-        <section class="container">
-            <div class="field">
-                <EmailInput v-model="v$.email.$model" :v="v$.email" :error="error" />
-                <EmailErrorMessage :v="v$.email" :error="error" translation="wrongEmail" />
-            </div>
-            <div class="field">
-                <PasswordInput v-model="user.password" :v="v$.password" :error="error" />
-                <PasswordErrorMessage :v="v$.password" :error="error" />
-            </div>
-            <Button :label='t("forgotPassword")' class="p-button-link" @click="resetPas" />
-        </section>
-        <footer>
-            <Button class="signBtn" type="submit" @click="signIn" :label='t("login")' />
-            <div class="rememberBtn">
-                <h4>{{ t("rememberMe") }}</h4>
-                <input type="checkbox" checked name="remember" />
-            </div>
-        </footer>
+        <div class="container">
+            <header>
+                <h1><Button class="pi pi-chevron-left icon" @click="returnBack" />{{ t("welcomeBack") }}
+                </h1>
+                <h2>{{ t("fillOut") }}</h2>
+            </header>
+            <section>
+                <hr />
+                <div class="field">
+                    <EmailInput v-model="user.email" :v="v$.email" :error="error" />
+                    <ErrorMessage :v="v$.email" :error="error" />
+                </div>
+                <div class="field">
+                    <PasswordInput v-model="user.password" :v="v$.password" :error="error" />
+                    <ErrorMessage :v="v$.password" :error="error" />
+                </div>
+            </section>
+            <footer>
+                <div class="foot">
+                    <Button :label='t("forgotPassword")' class="p-button-link forgotPassword" @click="resetPas" />
+                    <label for="chk-demo1">
+                        <input type="checkbox" checked name="remember" id="chk-demo1" />
+                        <span>{{ t("rememberMe") }}</span>
+                    </label>
+                </div>
+                <Button class="signBtn" type="submit" @click="signIn" :label='t("login")' />
+            </footer>
+        </div>
     </div>
 </template>
 <script setup lang="ts">
@@ -34,8 +38,7 @@ import { useVuelidate } from "@vuelidate/core";
 import { useUserStore } from "@/stores";
 import { useI18n } from "vue-i18n";
 import EmailInput from "@/components/textInput/EmailInput.vue";
-import EmailErrorMessage from "@/components/errors/EmailErrorMessage.vue";
-import PasswordErrorMessage from "@/components/errors/PasswordErrorMessage.vue";
+import ErrorMessage from "@/components/errors/ErrorMessage.vue";
 import PasswordInput from "@/components/textInput/PasswordInput.vue";
 
 const router = useRouter();
@@ -76,32 +79,4 @@ const returnBack = () => {
 
 <style scoped>
 @import "@/assets/style.css";
-
-.signBtn {
-    margin-top: 5px;
-}
-
-footer {
-    display: inline-flex;
-    justify-content: flex-end;
-}
-
-@media screen and (max-width: 576px) {
-    .container {
-        width: 315px;
-    }
-
-    footer {
-        width: 315px;
-        margin-top: 5px;
-        display: flex;
-        align-items: center;
-        flex-direction: row;
-    }
-
-    .signBtn {
-        margin: 0 10px;
-
-    }
-}
 </style>

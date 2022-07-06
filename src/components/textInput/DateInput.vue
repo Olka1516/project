@@ -1,6 +1,6 @@
 <template>
     <div class="p-float-label">
-        <Calendar class="calenBtn" id="date" v-model="userDate" @date-select="handleInput" :showIcon="true"
+        <Calendar class="calenBtn" id="date" v-model="userDate" @date-select="handleInput($event); props.v.$touch()" :showIcon="true"
             :class="{ 'p-invalid': isDateInvalid() }" />
         <label for="date" :class="{ 'p-error': isDateInvalid() }">
             {{ t("fillOutBirthday") }}*
@@ -15,10 +15,11 @@ import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 
 const props = defineProps<{
-    modelValue: Date | undefined
+    modelValue?: Date
     v: {
         $dirty: boolean
         $invalid: boolean
+        $touch: Function
     }
 }>()
 
@@ -30,7 +31,6 @@ const emit = defineEmits<{
 const userDate = ref(props.modelValue)
 
 const handleInput = (event: Date) => {
-    console.log("event", event)
     if (!event) return
     emit('update:modelValue', event)
 }

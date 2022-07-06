@@ -58,5 +58,11 @@ export default {
     passwordRequiredMinLength: "This field should be at least 6 characters long",
     requiredName: "Name is required",
     requiredDate: "Date is required",
-    requiredPhone: "Phone is required"
+    requiredPhone: "Phone is required",
+    showPage: {
+        1: "Showing ",
+        2: " to ",
+        3: " of ",
+        4: " entries"
+    }
 }

@@ -58,5 +58,11 @@ export default {
     passwordRequiredMinLength: "Це поле має містити не менше 6 символів",
     requiredName: "Потрібне ім'я",
     requiredDate: "Потрібна дата",
-    requiredPhone: "Потрібен телефон"
+    requiredPhone: "Потрібен телефон",
+    showPage: {
+        1: "Показано записи від ",
+        2: " до ",
+        3: " із ",
+        4: ""
+    }
 }

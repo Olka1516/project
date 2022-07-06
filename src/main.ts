@@ -1,8 +1,9 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
-import PrimeVue from 'primevue/config';
 import { initializeApp } from "firebase/app"
+import { getAuth } from "firebase/auth";
 
+import PrimeVue from 'primevue/config';
 import Button from "primevue/button";
 import InputText from "primevue/inputtext";
 import Divider from "primevue/divider";
@@ -20,7 +21,6 @@ import "primeicons/primeicons.css"
 import App from "./App.vue";
 import { i18n } from './lang'
 import router from "./router";
-import { getAuth } from "firebase/auth";
 
 initializeApp({
     apiKey: "AIzaSyBMun7Tlq0vuDG4k25GQdXh716t-1AwJvY",
@@ -37,12 +37,8 @@ getAuth();
 
 const app = createApp(App);
 
-app.use(createPinia());
-app.use(router);
-app.use(PrimeVue);
-app.use(i18n);
-app.use(ToastService)
+app.use(createPinia()).use(router).use(PrimeVue).use(i18n).use(ToastService).mount("#app");
 
-app.mount("#app");
-app.component("Button", Button).component("DataTable", DataTable).component("Column", Column).component("InputNumber", InputNumber).component("Sidebar", Sidebar).component("InputText", InputText)
+app.component("Button", Button).component("DataTable", DataTable).component("Column", Column)
+    .component("InputNumber", InputNumber).component("Sidebar", Sidebar).component("InputText", InputText)
     .component("Divider", Divider).component("Password", Password).component("Calendar", Calendar)

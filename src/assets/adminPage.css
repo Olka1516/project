@@ -1,0 +1,67 @@
+.forBackground {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #D0E5EC;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.setCountTrainings {
+    color: white;
+    border: none;
+    margin: 40px 15px;
+    width: 220px;
+    height: 23px;
+    background-color: #00589B;
+    border-radius: 0.25rem;
+    padding: 0;
+    display: inline-block;
+    font-size: 14px;
+}
+
+header {
+    height: 80px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+h1 {
+    font-size: 40px;
+}
+
+h2 {
+    font-size: 20px;
+}
+
+.table {
+    padding: 30px;
+}
+
+.tableTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.settingBtn {
+    margin: 10px;
+    border: none;
+    background-color: #00589B;
+    border-radius: 18px;
+}
+
+button.settingBtn:hover {
+    background-color: #2196F3;
+}
+
+.p-button-text {
+    margin-left: 34px;
+}
+
+@media screen and (max-width: 992px) {
+    .table {
+        padding: 0;
+    }
+}
