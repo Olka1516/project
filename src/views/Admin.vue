@@ -107,7 +107,6 @@
     </div>
 </template>
 <script setup lang="ts">
-
 import { ref, onMounted, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
@@ -135,6 +134,7 @@ const onCellEditComplete = (event: { data: any; newValue: number; field: any; } 
 }
 
 const set8 = async () => {
+    console.log("Its workk")
     userStore.set8(selectedClient.value);
     await customers.fetchClients();
 };
