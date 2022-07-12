@@ -18,6 +18,10 @@ export const useStore = defineStore('store', () => {
             operator: FilterOperator.AND,
             constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }],
         },
+        inTrainings: {
+            operator: FilterOperator.AND,
+            constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }],
+        },
         date: {
             operator: FilterOperator.AND,
             constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }],

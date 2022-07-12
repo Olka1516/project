@@ -1,11 +1,12 @@
 <template>
     <div class="p-float-label p-input-icon-right">
         <i class="pi pi-envelope" />
-        <InputText id="email" v-model="userEmail" @input="handleInput($event); props.v.$touch()" :class="{
-            'p-invalid': isEmailInvalid()
-        }" aria-describedby="email-error" />
+        <InputText id="email" v-model="userEmail"
+            @input="handleInput($event); props.v.$touch()" :class="{
+                'p-invalid': isEmailInvalid()
+            }" aria-describedby="email-error" />
         <label for="email" :class="{ 'p-error': isEmailInvalid() }">
-            {{ t("email") }}*
+            {{ t("email") }}
         </label>
     </div>
 </template>

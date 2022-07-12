@@ -62,5 +62,5 @@ const returnBack = () => {
 }
 </script>
 <style scoped>
-@import "@/assets/style.css";
+@import "@/assets/signPage.css";
 </style>

@@ -6,7 +6,7 @@
         }" toggleMask :feedback="false">
         </Password>
         <label for="confirmPassword" :class="{ 'p-error': isPasswordInvalid() }">
-            {{ t("confirmPassword") }}*
+            {{ t("confirmPassword") }}
         </label>
     </div>
 </template>
@@ -49,5 +49,5 @@ watch(() => props.modelValue, (data) => {
 
 </script>
 <style scoped>
-@import "@/assets/style.css";
+@import "@/assets/signPage.css";
 </style>

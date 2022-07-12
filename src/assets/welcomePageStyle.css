@@ -1,7 +1,12 @@
 .forBackground {
     width: 100%;
     min-height: 100vh;
-    background: linear-gradient(135deg, #fa6055, rgb(238, 179, 189));
+    background-image: url("../assets/background.png");
+}
+
+.background {
+    height: 600px;
+    background-image: url("../assets/background3.png");
 }
 
 header {
@@ -10,28 +15,23 @@ header {
 }
 
 .logoInner {
-    margin-left: 20px;
+    margin-left: 30px;
 }
 
 .text {
     font-size: 30px;
     text-align: right;
-    margin: 80px 180px 0 0;
+    margin: 110px 180px 0 0;
 }
 
 footer {
     text-align: center;
-    margin-top: 14px;
+    margin-top: 30px;
 }
 
-.p-button-danger {
-    width: 180px;
-    height: 30px;
-    border-radius: 10px;
-}
-
-.p-button-danger:hover {
-    animation: pulsate 1s ease-in-out;
+.mainButton:hover {
+    background-color: #e0c2c2;
+    color: #24272b;
 }
 
 .signInBtn {
@@ -40,34 +40,23 @@ footer {
     border: none;
     background: none;
     text-decoration: underline;
-    color: #1f2b38;
+    color: #0e1218;
 }
 
 .signInBtn:hover {
     background: none;
-    color: #415061;
-}
-
-@keyframes pulsate {
-    0% {
-        box-shadow: 0 0 10px #ff755d, 0 0 14px #ce002d;
-    }
+    color: #24272b;
 }
 
 @media screen and (max-width: 1200px) {
     .logoInner {
         width: 350px;
         height: 350px;
+        margin-left: 20px;
     }
 
     .text {
         margin-right: 100px;
-    }
-}
-
-@media screen and (max-width: 992px) {
-    .text {
-        margin-right: 80px;
     }
 
     footer {
@@ -75,20 +64,31 @@ footer {
     }
 }
 
+@media screen and (max-width: 992px) {
+    .text {
+        margin-top: 130px;
+        margin-right: 14px;
+        font-size: 24px;
+    }
+
+    footer {
+        margin-top: 100px;
+    }
+}
+
 @media screen and (max-width: 768px) {
     .logoInner {
-        margin-top: 30px;
+        margin-top: 50px;
         width: 300px;
         height: 300px;
     }
 
     .text {
-        font-size: 27px;
-        margin-right: 60px;
+        font-size: 21px;
     }
 
     footer {
-        margin-top: 90px;
+        margin-top: 190px;
     }
 }
 
@@ -98,12 +98,13 @@ footer {
     }
 
     .logoInner {
-        width: 200px;
-        height: 200px;
+        width: 165px;
+        height: 165px;
+        margin-top: 0px;
     }
 
     .text {
         font-size: 20px;
-        margin: 0 5px;
+        margin-top: -30px;
     }
 }

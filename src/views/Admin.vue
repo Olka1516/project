@@ -1,7 +1,7 @@
 <template>
     <div class="forBackground">
         <header>
-            <Button class="settingBtn" type="button" @click="visibleLeft = true" icon="pi pi-user" />
+            <Button class="headerBtn" type="button" @click="visibleLeft = true" icon="pi pi-user" />
             <Sidebar v-model:visible="visibleLeft" :baseZIndex="10000">
                 <h3>{{ t("language") }}</h3>
                 <hr>
@@ -13,13 +13,13 @@
             </Sidebar>
             <h1>Gfamily</h1>
         </header>
-        <hr>
         <section>
+            <hr>
             <h1>{{ t("hello") }}{{ name }}</h1>
             <h2>{{ t("advice") }}</h2>
-            <Button class="setCountTrainings" @click="set8">{{ t("topUp") }} 8</Button>
-            <Button class="setCountTrainings" @click="set12">{{ t("topUp") }} 12</Button>
-            <Button class="setCountTrainings" @click="decrease" :label='t("decrease")' />
+            <Button class="mainButton" @click="set8">{{ t("topUp") }} 8</Button>
+            <Button class="mainButton" @click="set12">{{ t("topUp") }} 12</Button>
+            <Button class="mainButton" @click="decrease" :label='t("decrease")' />
         </section>
         <hr>
         <footer class="table">
@@ -38,7 +38,7 @@
                             <i class="pi pi-search" />
                             <InputText v-model="filters['global'].value" placeholder='Search' />
                         </span>
-                        <Button @click="refresh" icon="pi pi-refresh" />
+                        <Button @click="refresh" icon="pi pi-refresh" class="headerBtn" />
                     </div>
                 </template>
                 <template #empty>{{ t("noCustomers") }}</template>
@@ -53,7 +53,7 @@
                             placeholder="Search by name" />
                     </template>
                 </Column>
-                <Column field="role" :header='t("role")' sortable filterMatchMode="contains" style="min-width: 14rem">
+                <Column field="role" :header='t("role")' sortable filterMatchMode="contains" style="min-width: 10rem">
                     <template #body="{ data }">
                         {{ data.role }}
                     </template>
@@ -63,7 +63,7 @@
                     </template>
                 </Column>
                 <Column :header='t("count")' :field="'count'" :key="'count'" sortable sortField="count"
-                    filterField="count" dataType="numeric" style="min-width: 14rem" filter>
+                    filterField="count" dataType="numeric" style="min-width: 8rem" filter>
                     <template #editor="{ data, field }">
                         <InputText v-model="data[field]" />
                     </template>
@@ -81,7 +81,7 @@
                             placeholder="Search by training status" />
                     </template>
                 </Column>
-                <Column field="date" :header='t("clientBirthday")' sortable dataType="date" style="min-width: 8rem">
+                <Column field="date" :header='t("clientBirthday")' sortable dataType="date" style="min-width: 14rem">
                     <template #body="{ data }">
                         {{ d(new Date(+data.date.seconds * 1000), 'short') }}
                     </template>
@@ -89,7 +89,7 @@
                         <Calendar v-model="filterModel.value" dateFormat="mm/dd/yy" placeholder="mm/dd/yyyy" />
                     </template>
                 </Column>
-                <Column field="phone" :header='t("clientPhone")' sortable dataType="numeric" style="min-width: 8rem">
+                <Column field="phone" :header='t("clientPhone")' sortable style="min-width: 14rem">
                     <template #body="{ data }">
                         {{ data.phone }}
                     </template>
@@ -97,11 +97,15 @@
                         <InputNumber v-model="filterModel.value" />
                     </template>
                 </Column>
-                <Column headerStyle="width: 4rem; text-align: center" bodyStyle="text-align: center; overflow: visible">
-                    <template #body>
-                        <Button type="button" icon="pi pi-cog"></Button>
+                <!-- <Column field="verified" header="Verified" dataType="boolean" style="min-width:6rem">
+                    <template #body="{ data }">
+                        <i class="pi"
+                            :class="{ 'true-icon pi-check-circle': data.verified, 'false-icon pi-times-circle': !data.verified }"></i>
                     </template>
-                </Column>
+                    <template #filter="{ filterModel, filterCallback }">
+                        <TriStateCheckbox v-model="filterModel.value" @change="filterCallback()" />
+                    </template>
+                </Column> -->
             </DataTable>
         </footer>
     </div>

@@ -19,7 +19,7 @@
             </template>
         </Password>
         <label for="password" :class="{ 'p-error': isPasswordInvalid() }">
-            {{ t("password") }}*
+            {{ t("password") }}
         </label>
     </div>
 </template>
@@ -62,5 +62,5 @@ watch(() => props.modelValue, (data) => {
 </script>
 
 <style scoped>
-@import "@/assets/style.css";
+@import "@/assets/signPage.css";
 </style>

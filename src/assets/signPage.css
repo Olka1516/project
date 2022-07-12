@@ -1,6 +1,6 @@
 .forBackground {
     min-height: 100vh;
-    background-color: #ebd7c3;
+    background-color: #c4d0da;
     display: flex;
     justify-content: space-around;
 }
@@ -31,11 +31,14 @@ header {
 
 .p-input-icon-right {
     width: 100%;
-    border: none;
+    border: solid 1px #c3c5c7;
+    border-radius: 4px;
 }
 
 .calenBtn {
     width: 100%;
+    border: solid 1px #c3c5c7;
+    border-radius: 4px;
 }
 
 .foot {
@@ -45,15 +48,24 @@ header {
 
 .forgotPassword {
     margin-top: 10px;
+    color: #044679;
 }
 
 .signBtn {
-    margin: 30px 0;
-    padding-bottom: 10px;
     width: 100%;
     height: 40px;
-    background-color: #00589B;
-    border: none;
+    border: solid 1px #1F2B38;
+    background-color: #e4b3cd;
+    color: #24272b;
+    margin: 30px 0;
+    padding-bottom: 10px;
+    font-weight: 700;
+}
+
+.signBtn:hover {
+    background-color: #e0c2c2;
+    border: solid 1px #24272B;
+    color: #000000;
 }
 
 
@@ -86,7 +98,7 @@ header {
     width: 18px;
     height: 18px;
     z-index: 0;
-    border: 2px solid #5a5a5a;
+    border: 2px solid #1F2B38;
     border-radius: 1px;
     margin-top: 3px;
     -webkit-transition: .2s;
@@ -106,8 +118,8 @@ header {
     height: 21px;
     border-top: 2px solid transparent;
     border-left: 2px solid transparent;
-    border-right: 2px solid #2571ac;
-    border-bottom: 2px solid #2571ac;
+    border-right: 2px solid #24272B;
+    border-bottom: 2px solid #24272B;
     -webkit-transform: rotate(40deg);
     transform: rotate(40deg);
     -webkit-backface-visibility: hidden;

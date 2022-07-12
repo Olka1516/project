@@ -4,7 +4,7 @@
         <InputText id="name" v-model="userName" @input="handleInput($event); props.v.$touch()"
             :class="{ 'p-invalid': isNameInvalid() }" />
         <label for="name" :class="{ 'p-error': isNameInvalid() }">
-            {{ t("name") }}*
+            {{ t("name") }}
         </label>
     </div>
 </template>

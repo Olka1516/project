@@ -5,7 +5,7 @@
             'p-invalid': isPhoneInvalid()
         }" />
         <label for="phone" :class="{ 'p-error': isPhoneInvalid() }">
-            {{ t("fillOutPhone") }}*
+            {{ t("fillOutPhone") }}
         </label>
     </div>
 </template>
@@ -20,7 +20,7 @@ const props = defineProps<{
     v: {
         $invalid: boolean
         $dirty: boolean
-                $touch: Function
+        $touch: Function
     }
 }>()
 

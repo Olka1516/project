@@ -79,7 +79,7 @@ input {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  color: #1F2B38;
 }
 
 h2 {
@@ -87,10 +87,19 @@ h2 {
   margin: 8px;
 }
 
-h4 {
-  min-width: 120px;
-}
-
 #nav {
   margin: 0;
+}
+
+  label{
+    color: #24272B;
+  }
+.mainButton {
+  font-weight: 700;
+  width: 180px;
+  height: 30px;
+  border-radius: 10px;
+  background-color: #e4b3cd;
+  border: none;
+  color: #0e1218;
 }

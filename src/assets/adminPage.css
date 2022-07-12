@@ -1,23 +1,10 @@
 .forBackground {
     width: 100%;
     min-height: 100vh;
-    background-color: #D0E5EC;
+    background: #828A95;
     justify-content: center;
     align-items: center;
     text-align: center;
-}
-
-.setCountTrainings {
-    color: white;
-    border: none;
-    margin: 40px 15px;
-    width: 220px;
-    height: 23px;
-    background-color: #00589B;
-    border-radius: 0.25rem;
-    padding: 0;
-    display: inline-block;
-    font-size: 14px;
 }
 
 header {
@@ -25,6 +12,41 @@ header {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    background: #828A95;
+}
+
+.headerBtn {
+    margin: 10px;
+    border: none;
+    background-color: #e4b3cd;
+    border-radius: 18px;
+    color: #24272b;
+}
+
+h3 {
+    color: #1F2B38;
+}
+
+.headerBtn:hover {
+    background-color: #e0c2c2;
+    color: #000000;
+}
+
+section {
+    background-image: url("../assets/background2.png");
+}
+
+.mainButton {
+    padding: 0;
+    display: inline-block;
+    font-size: 14px;
+    margin: 40px 15px;
+    font-weight: 600;
+}
+
+.mainButton:hover {
+    background-color: #e0c2c2;
+    color: #24272b;
 }
 
 h1 {
@@ -39,29 +61,37 @@ h2 {
     padding: 30px;
 }
 
+hr {
+    margin: 0;
+}
+
+footer {
+    background-image: url("../assets/background.png");
+}
+
 .tableTop {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.settingBtn {
-    margin: 10px;
-    border: none;
-    background-color: #00589B;
-    border-radius: 18px;
-}
-
-button.settingBtn:hover {
-    background-color: #2196F3;
-}
-
 .p-button-text {
     margin-left: 34px;
+    color: #0E1218;
 }
 
 @media screen and (max-width: 992px) {
     .table {
         padding: 0;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    h1 {
+        font-size: 35px;
+    }
+
+    h2 {
+        font-size: 16px;
     }
 }

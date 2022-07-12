@@ -1,9 +1,9 @@
 <template>
     <div class="p-float-label">
-        <Calendar class="calenBtn" id="date" v-model="userDate" @date-select="handleInput($event); props.v.$touch()" :showIcon="true"
-            :class="{ 'p-invalid': isDateInvalid() }" />
+        <Calendar class="calenBtn" id="date" v-model="userDate" @date-select="handleInput($event); props.v.$touch()"
+            :showIcon="true" :class="{ 'p-invalid': isDateInvalid() }" />
         <label for="date" :class="{ 'p-error': isDateInvalid() }">
-            {{ t("fillOutBirthday") }}*
+            {{ t("fillOutBirthday") }}
         </label>
     </div>
 </template>
@@ -44,5 +44,5 @@ watch(() => props.modelValue, (data) => {
 })
 </script>
 <style scoped>
-@import "@/assets/style.css";
+@import "@/assets/signPage.css";
 </style>
