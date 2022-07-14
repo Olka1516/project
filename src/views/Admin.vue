@@ -97,7 +97,7 @@
                         <InputNumber v-model="filterModel.value" />
                     </template>
                 </Column>
-                <Column field="verified" header="Verified" dataType="boolean" style="min-width:6rem">
+                <!-- <Column field="verified" header="Verified" dataType="boolean" style="min-width:6rem">
                     <template #body="{ data }">
                         <i class="pi"
                             :class="{ 'true-icon pi-check-circle': data.verified, 'false-icon pi-times-circle': !data.verified }"></i>
@@ -105,7 +105,7 @@
                     <template #filter="{ filterModel, filterCallback }">
                         <TriStateCheckbox v-model="filterModel.value" @change="filterCallback()" />
                     </template>
-                </Column>
+                </Column> -->
             </DataTable>
         </footer>
     </div>
