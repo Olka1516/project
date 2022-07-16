@@ -59,10 +59,11 @@ export default {
     requiredName: "Name is required",
     requiredDate: "Date is required",
     requiredPhone: "Phone is required",
-    showPage: {
-        1: "Showing ",
-        2: " to ",
-        3: " of ",
-        4: " entries"
-    }
+    search: "Search",
+    searchByName: "Search by name",
+    searchByRole: "Search by role",
+    searchByTrainingStatus: "Search by training status",
+    searchByDate: "mm/dd/yyyy",
+    searchByPhone: "Search by phone",
+    showPage: " of "
 }

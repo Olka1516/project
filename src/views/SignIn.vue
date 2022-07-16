@@ -44,10 +44,11 @@ import PasswordInput from "@/components/textInput/PasswordInput.vue";
 const router = useRouter();
 const userStore = useUserStore();
 const error = ref('');
-const { t } = useI18n();
+const { t,locale } = useI18n();
 const user = reactive({
     email: "sasha@gmail.com",
     password: "123456",
+    language: locale.value
 });
 const rules = {
     email: { required, email },

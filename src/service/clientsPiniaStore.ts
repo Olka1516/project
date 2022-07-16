@@ -13,7 +13,7 @@ export interface Client {
 }
 
 export const useClientsStore = defineStore('clients', () => {
-    let state: {storeClients: Client[]} = reactive({
+    let state: {storeClients: Client[] | undefined} = reactive({
         storeClients: []
     })
 

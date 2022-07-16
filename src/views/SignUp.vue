@@ -57,7 +57,7 @@ import DateInput from "@/components/textInput/DateInput.vue";
 import PhoneInput from "@/components/textInput/PhoneInput.vue";
 import ErrorMessage from "@/components/errors/ErrorMessage.vue";
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const userStore = useUserStore();
 const router = useRouter();
 const error = ref('');
@@ -68,6 +68,7 @@ const user = reactive({
     date: undefined,
     phone: "",
     confirmPassword: "",
+    language: locale.value
 });
 const rules = {
     email: { required, email },

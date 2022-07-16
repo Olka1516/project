@@ -59,10 +59,11 @@ export default {
     requiredName: "Потрібне ім'я",
     requiredDate: "Потрібна дата",
     requiredPhone: "Потрібен телефон",
-    showPage: {
-        1: "Показано записи від ",
-        2: " до ",
-        3: " із ",
-        4: ""
-    }
+    search: "Пошук",
+    searchByName: "Шукати за ім`ям",
+    searchByRole: "Шукати за ролями",
+    searchByTrainingStatus: "Шукати за станом тренування",
+    searchByDate: "mm/dd/yyyy",
+    searchByPhone: "Шукати за телефоном",
+    showPage: " з "
 }

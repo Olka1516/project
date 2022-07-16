@@ -5,8 +5,8 @@
             <Sidebar v-model:visible="visibleLeft" :baseZIndex="10000">
                 <h3>{{ t("language") }}</h3>
                 <hr>
-                <Button icon="pi pi-globe" @click="locale = 'en'" label='English' class="p-button-text" />
-                <Button icon="pi pi-globe" @click="locale = 'ua'" label='Українська' class="p-button-text" />
+                <Button icon="pi pi-globe" @click="changeLanguage('en')" label='English' class="p-button-text" />
+                <Button icon="pi pi-globe" @click="changeLanguage('ua')" label='Українська' class="p-button-text" />
                 <h3>{{ t("quit") }}</h3>
                 <hr>
                 <Button icon="pi pi-sign-out" @click="quit" label="Exit" class="p-button-text" />
@@ -29,14 +29,14 @@
                 filterDisplay="menu" :loading="loading"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 :rowsPerPageOptions="[10, 25, 50]"
-                :currentPageReportTemplate="t('showPage.1') + '{first}' + t('showPage.2') + '{last}' + t('showPage.3') + '{totalRecords}' + t('showPage.4')"
+                :currentPageReportTemplate="'{first}' + '-' + '{last}' + t('showPage') + '{totalRecords}'"
                 :globalFilterFields="['name', 'role', 'phone']" responsiveLayout="scroll">
                 <template #header>
                     <div class="tableTop">
                         <h5 class="m-0">{{ t("customers") }}</h5>
                         <span class="p-input-icon-left">
                             <i class="pi pi-search" />
-                            <InputText v-model="filters['global'].value" placeholder='Search' />
+                            <InputText v-model="filters['global'].value" :placeholder="t('search')" />
                         </span>
                         <Button @click="refresh" icon="pi pi-refresh" class="headerBtn" />
                     </div>
@@ -50,26 +50,26 @@
                     </template>
                     <template #filter="{ filterModel }">
                         <InputText type="text" v-model="filterModel.value" class="p-column-filter"
-                            placeholder="Search by name" />
+                            :placeholder='t("searchByName")' />
                     </template>
                 </Column>
-                <Column field="role" :header='t("role")' sortable filterMatchMode="contains" style="min-width: 10rem">
+                <Column field="role" :header='t("role")' sortable style="min-width: 10rem">
                     <template #body="{ data }">
                         {{ data.role }}
                     </template>
                     <template #filter="{ filterModel }">
                         <InputText type="text" v-model="filterModel.value" class="p-column-filter"
-                            placeholder="Search by role" />
+                            :placeholder='t("searchByRole")' />
                     </template>
                 </Column>
-                <Column :header='t("count")' :field="'count'" :key="'count'" sortable sortField="count"
-                    filterField="count" dataType="numeric" style="min-width: 8rem" filter>
+                <Column :header='t("count")' field="count" :key="'count'" sortable sortField="count" filterField="count"
+                    dataType="numeric" style="min-width: 8rem" filter>
                     <template #editor="{ data, field }">
-                        <InputText v-model="data[field]" />
+                        <InputNumber v-model="data[field]" />
                     </template>
                     <template #filter="{ filterModel, filterCallback }">
-                        <InputText type="text" v-model="filterModel.value" @keydown.enter="filterCallback()"
-                            class="p-column-filter" />
+                        <InputNumber type="text" v-model="filterModel.value" @keydown.enter="filterCallback()"
+                            class="p-column-filter" placeholder='0' />
                     </template>
                 </Column>
                 <Column field="inTrainings" :header='t("trainings")' sortable style="min-width: 14rem">
@@ -78,12 +78,12 @@
                     </template>
                     <template #filter="{ filterModel }">
                         <InputText type="text" v-model="filterModel.value" class="p-column-filter"
-                            placeholder="Search by training status" />
+                            :placeholder='t("searchByTrainingStatus")' />
                     </template>
                 </Column>
                 <Column field="date" :header='t("clientBirthday")' sortable dataType="date" style="min-width: 14rem">
                     <template #body="{ data }">
-                        {{ d(new Date(+data.date.seconds * 1000), 'short') }}
+                        {{ d(data.date, 'short') }}
                     </template>
                     <template #filter="{ filterModel }">
                         <Calendar v-model="filterModel.value" dateFormat="mm/dd/yy" placeholder="mm/dd/yyyy" />
@@ -94,18 +94,10 @@
                         {{ data.phone }}
                     </template>
                     <template #filter="{ filterModel }">
-                        <InputNumber v-model="filterModel.value" />
+                        <InputNumber v-model="filterModel.value" class="p-column-filter"
+                            :placeholder='t("searchByPhone")' />
                     </template>
                 </Column>
-                <!-- <Column field="verified" header="Verified" dataType="boolean" style="min-width:6rem">
-                    <template #body="{ data }">
-                        <i class="pi"
-                            :class="{ 'true-icon pi-check-circle': data.verified, 'false-icon pi-times-circle': !data.verified }"></i>
-                    </template>
-                    <template #filter="{ filterModel, filterCallback }">
-                        <TriStateCheckbox v-model="filterModel.value" @change="filterCallback()" />
-                    </template>
-                </Column> -->
             </DataTable>
         </footer>
     </div>
@@ -125,8 +117,9 @@ const { t, d, locale } = useI18n();
 const selectedClient = ref();
 const loading = ref(true);
 const visibleLeft = ref(false);
-const name = computed(() => userStore.name);
 const filters = ref(store.filters);
+const name = computed(() => userStore.name);
+locale.value = userStore.language;
 
 onMounted(async () => {
     await customers.fetchClients();
@@ -158,6 +151,10 @@ const refresh = async () => {
 const quit = async () => {
     await userStore.signOutClient()
     await router.push("/");
+}
+const changeLanguage = async (language: string) => {
+    locale.value = language;
+    await userStore.changeLanguage(language);
 }
 </script>
 <style scoped>

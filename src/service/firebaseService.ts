@@ -11,19 +11,23 @@ export interface Client {
   date: Date;
   email: string;
   inTrainings: string;
+  language: string;
 }
 
-export const getClients = async () => {
+export const getClients = async (): Promise<Client[] | undefined> => {
   const db = getFirestore();
   const data = await getDocs(collection(db, "clients"));
   const clients: Client[] = [];
+  let customer: any = {};
   data.forEach((client: any) => {
-    clients.push(client.data());
+    customer = client.data()
+    customer.date = new Date(+customer.date.seconds * 1000)
+    clients.push(customer);
   })
   return clients;
 }
 
-export const updateTrainingsCountByClientId = async (id: string, trainingsCount: number) => {
+export const updateTrainingsCountByClientId = async (id: string, trainingsCount: number): Promise<void> => {
   const db = getFirestore();
   const clientsRef = doc(db, "clients", id);
   await updateDoc(clientsRef, {
@@ -31,7 +35,7 @@ export const updateTrainingsCountByClientId = async (id: string, trainingsCount:
   });
 }
 
-export const changeTrainingsCountByClientId = async (id: string, newTrainingsCount: number) => {
+export const changeTrainingsCountByClientId = async (id: string, newTrainingsCount: number): Promise<void> => {
   const db = getFirestore();
   const clientsRef = doc(db, "clients", id);
   await updateDoc(clientsRef, {
@@ -39,7 +43,7 @@ export const changeTrainingsCountByClientId = async (id: string, newTrainingsCou
   });
 }
 
-export const decreaseTrainingsCountForCurrentUserById = async (id: string, trainingsCount: number) => {
+export const decreaseTrainingsCountForCurrentUserById = async (id: string, trainingsCount: number): Promise<number> => {
   const db = getFirestore();
   const clientsRef = doc(db, "clients", id);
   await updateDoc(clientsRef, {
@@ -49,7 +53,7 @@ export const decreaseTrainingsCountForCurrentUserById = async (id: string, train
   return trainingsCount;
 }
 
-export const signUpByUserEmailAndPassword = async (email: string, password: string, name: string, date: Date, phone: string) => {
+export const signUpByUserEmailAndPassword = async (email: string, password: string, name: string, date: Date, phone: string, language: string): Promise<void> => {
   const auth = getAuth();
   const db = getFirestore();
   await setPersistence(auth, browserSessionPersistence);
@@ -62,17 +66,15 @@ export const signUpByUserEmailAndPassword = async (email: string, password: stri
     count: 0,
     role: "client",
     id: auth.currentUser!.uid,
-    inTrainings: "Not in training"
+    inTrainings: "Not in training",
+    language
   })
 }
 
-export const signInByUserEmailAndPassword = async (email: string, password: string) => {
+export const signInByUserEmailAndPassword = async (email: string, password: string): Promise<void> => {
   const auth = getAuth();
-  const db = getFirestore();
   await setPersistence(auth, browserSessionPersistence);
-  const userSignIn = await signInWithEmailAndPassword(auth, email, password);
-  const userData = await getDoc(doc(db, "clients", auth.currentUser!.uid));
-  return { userSignIn, userData: userData.data() }
+  await signInWithEmailAndPassword(auth, email, password);
 }
 
 export const signOutCurrentUser = async () => {
@@ -106,11 +108,20 @@ export const isUserSignIn = () => {
   })
 }
 
-export const changeCurrentUserStatus = async () => {
+export const changeCurrentUserStatus = async (): Promise<void> => {
   const db = getFirestore();
   const auth = getAuth();
   const clientsRef = doc(db, "clients", auth.currentUser!.uid);
   await updateDoc(clientsRef, {
     inTrainings: 'In training'
+  });
+}
+
+export const changeLanguageForCurrentUser = async (language: string): Promise<void> => {
+  const db = getFirestore();
+  const auth = getAuth();
+  const clientsRef = doc(db, "clients", auth.currentUser!.uid);
+  await updateDoc(clientsRef, {
+    language
   });
 }

@@ -26,7 +26,6 @@ const props = defineProps<{
 }>();
 
 const getError = () => {
-    console.log("props v", props.v)
     const { $message: message } = props.v.$errors?.[0] ?? { $message: null }
 
     switch (props.v.$path) {

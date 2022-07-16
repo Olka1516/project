@@ -1,16 +1,16 @@
 import { defineStore } from 'pinia'
 import { reactive, toRefs } from "vue";
-import { changeCurrentUserStatus, changeTrainingsCountByClientId, decreaseTrainingsCountForCurrentUserById, isUserSignIn, resetUserPassword, saveCurrentUserDataInState, signInByUserEmailAndPassword, signOutCurrentUser, signUpByUserEmailAndPassword, updateTrainingsCountByClientId } from '../service/firebaseService';
-
+import { changeCurrentUserStatus, changeTrainingsCountByClientId, decreaseTrainingsCountForCurrentUserById, isUserSignIn, resetUserPassword, saveCurrentUserDataInState, signInByUserEmailAndPassword, signOutCurrentUser, signUpByUserEmailAndPassword, updateTrainingsCountByClientId, changeLanguageForCurrentUser } from '../service/firebaseService';
 export interface State {
-    count?: number | undefined;
-    name?: string | undefined;
-    phone?: string | undefined;
-    role?: string | undefined;
-    date?: Date | undefined;
-    email?: string | undefined;
-    inTrainings?: string | undefined;
+    count?: number;
+    name?: string;
+    phone?: string;
+    role?: string;
+    date?: Date;
+    email?: string;
+    inTrainings?: string;
     password?: string;
+    language: string;
 }
 
 export const useUserStore = defineStore('user', () => {
@@ -21,7 +21,8 @@ export const useUserStore = defineStore('user', () => {
         role: undefined,
         date: undefined,
         email: undefined,
-        inTrainings: undefined
+        inTrainings: undefined,
+        language: "ua"
     })
 
     const decrease = (selectedClient: { id: string; count: number }[]) => {
@@ -46,8 +47,8 @@ export const useUserStore = defineStore('user', () => {
         await changeTrainingsCountByClientId(id, newCount);
     }
 
-    const signUp = async ({ email, password, name, date, phone }: State) => {
-        await signUpByUserEmailAndPassword(email!, password!, name!, date!, phone!);
+    const signUp = async ({ email, password, name, date, phone, language}: State) => {
+        await signUpByUserEmailAndPassword(email!, password!, name!, date!, phone!, language!);
     }
 
     const signIn = async ({ email, password }: State) => {
@@ -62,6 +63,7 @@ export const useUserStore = defineStore('user', () => {
             state.phone = undefined;
             state.date = undefined;
             state.email = undefined;
+            state.language = "ua";
         } else {
             throw new Error("Something went wrong");
         }
@@ -78,7 +80,8 @@ export const useUserStore = defineStore('user', () => {
         state.count = currentUserData?.count;
         state.inTrainings = currentUserData?.inTrainings;
         state.email = currentUserData?.email;
-        state.date = currentUserData?.date
+        state.date = currentUserData?.date;
+        state.language = currentUserData!.language;
     }
 
     const isUserLogIn = async () => {
@@ -87,6 +90,10 @@ export const useUserStore = defineStore('user', () => {
 
     const changeStatus = async () => {
         await changeCurrentUserStatus();
+    }
+
+    const changeLanguage = async (language: string) => {
+        await changeLanguageForCurrentUser(language);
     }
 
     return {
@@ -101,6 +108,7 @@ export const useUserStore = defineStore('user', () => {
         changeCount,
         changeUserData,
         isUserLogIn,
-        changeStatus
+        changeStatus,
+        changeLanguage
     }
 });
