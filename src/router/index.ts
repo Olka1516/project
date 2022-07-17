@@ -25,14 +25,14 @@ const router = createRouter({
       component: SignUp,
     },
     {
-      path: "/resetPassword",
+      path: "/resetPasswordz",
       name: "resetPassword",
       component: ResetPassword,
     },
     {
       path: "/admin",
       name: "admin",
-      component: Admin,
+      component: Admin,z
       meta: { requiresAuth: true }
     },
   ],
